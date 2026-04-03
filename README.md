@@ -12,7 +12,7 @@
 
 
 
-## 🛠️ Tech Stack
+## Tech Stack
 * **Framework**: [LangChain](https://www.langchain.com/) (RAG Orchestration)
 * **Interface**: [Streamlit](https://streamlit.io/)
 * **Vector Database**: [ChromaDB](https://www.trychroma.com/)
@@ -71,7 +71,7 @@ The system retrieves similar posts, reranks them for relevance, and then compare
 
 ---
 
-## 🏁 Running the App
+## Running the App
 Start the interactive dashboard using Streamlit:
 
 streamlit run app.py
