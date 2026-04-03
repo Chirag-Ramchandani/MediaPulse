@@ -438,10 +438,10 @@ st.markdown(f"""
 
 # CONFIG
 
-csv_path = os.getenv("CSV_PATH", "mediapulse_dataset_updated.csv")
+csv_path = os.getenv("CSV_PATH", "mediapulse-dataset.csv")
 persist_directory = os.getenv("CHROMA_DIR", "chroma_db")
 collection_name = os.getenv("CHROMA_COLLECTION", "mediapulse_dataset")
-logo_path = os.getenv("LOGO_PATH", "E:/mediapulse_ui_project/FullLogo_Transparent_NoBuffer.png")
+logo_path = os.getenv("LOGO_PATH", "Logo.png")
 
 
 # LOAD BOT
