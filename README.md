@@ -22,7 +22,7 @@
 
 
 ## Project Structure
-
+```
 MediaPulse/
 ├── src/
 │   ├── chatbot.py           # Core RAG logic & scoring algorithm
@@ -31,7 +31,7 @@ MediaPulse/
 ├── .env                     # Configuration (API tokens & paths)
 ├── requirements.txt         # Project dependencies
 └── mediapulse-dataset.csv   # Historical Instagram performance data
-
+```
 
 
 ## Setup & Installation
@@ -47,13 +47,14 @@ pip install -r requirements.txt
 ### 3. Configuration
 Create a `.env` file in the root directory with the following:
 
+```
 HF_TOKEN=your_huggingface_token_here
 CSV_PATH=data/mediapulse-dataset.csv
 CHROMA_DIR=chroma_db
 CHROMA_COLLECTION=mediapulse_dataset
 EMBEDDING_MODEL=BAAI/bge-small-en-v1.5
 RERANKER_MODEL=BAAI/bge-reranker-base
-
+```
 ### 4. Build Vector Store
 Run the script to index your CSV data into the ChromaDB vector database:
 
