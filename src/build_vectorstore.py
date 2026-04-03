@@ -13,7 +13,8 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Better path handling
-CSV_PATH = os.getenv("CSV_PATH", str(BASE_DIR / "mediapulse-dataset.csv"))
+DEFAULT_CSV_PATH = BASE_DIR / "data" / "dataset" / "mediapulse-dataset.csv"
+CSV_PATH = os.getenv("CSV_PATH", "").strip()
 PERSIST_DIRECTORY = os.getenv("CHROMA_DIR", str(BASE_DIR / "chroma_db"))
 COLLECTION_NAME = os.getenv("CHROMA_COLLECTION", "mediapulse_dataset")
 MODEL_NAME = os.getenv("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5")
@@ -123,8 +124,33 @@ def main():
         except Exception:
             pass
 
-    print(f"Reading CSV from: {CSV_PATH}")
-    df = pd.read_csv(CSV_PATH)
+    if CSV_PATH:
+        csv_path = Path(CSV_PATH)
+        if not csv_path.is_absolute():
+            csv_path = BASE_DIR / csv_path
+
+        if not csv_path.exists():
+            if DEFAULT_CSV_PATH.exists():
+                print(
+                    f"Warning: CSV_PATH points to a missing file: {csv_path}\n"
+                    f"Falling back to default dataset: {DEFAULT_CSV_PATH}"
+                )
+                csv_path = DEFAULT_CSV_PATH
+            else:
+                raise FileNotFoundError(
+                    f"CSV file not found: {csv_path}\n"
+                    f"Please set CSV_PATH in .env to a valid path or place the dataset at: {DEFAULT_CSV_PATH}"
+                )
+    else:
+        csv_path = DEFAULT_CSV_PATH
+        if not csv_path.exists():
+            raise FileNotFoundError(
+                f"Default CSV file not found: {csv_path}\n"
+                f"Please set CSV_PATH in .env or place the dataset at: {DEFAULT_CSV_PATH}"
+            )
+
+    print(f"Reading CSV from: {csv_path}")
+    df = pd.read_csv(csv_path)
 
     print(f"Rows loaded: {len(df)}")
     print("Preparing timestamp, posting_time, and day_of_week...")
@@ -134,7 +160,9 @@ def main():
 
     embeddings = HuggingFaceEmbeddings(model_name=MODEL_NAME)
 
-    # Optional: remove old DB manually if you want a clean rebuild
+    # Create chroma_db folder automatically if it does not exist
+    os.makedirs(PERSIST_DIRECTORY, exist_ok=True)
+
     vectorstore = Chroma.from_documents(
         documents=documents,
         embedding=embeddings,
