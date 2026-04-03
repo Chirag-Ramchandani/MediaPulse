@@ -12,7 +12,7 @@
 
 
 
-## 🛠️ Tech Stack
+## Tech Stack
 * **Framework**: [LangChain](https://www.langchain.com/) (RAG Orchestration)
 * **Interface**: [Streamlit](https://streamlit.io/)
 * **Vector Database**: [ChromaDB](https://www.trychroma.com/)
@@ -22,16 +22,25 @@
 
 
 ## Project Structure
-
+```
 MediaPulse/
 ├── src/
-│   ├── chatbot.py           # Core RAG logic & scoring algorithm
-│   └── build_vectorstore.py  # Data indexing & embedding pipeline
-├── app.py                   # Streamlit UI & session state management
-├── .env                     # Configuration (API tokens & paths)
-├── requirements.txt         # Project dependencies
-└── mediapulse-dataset.csv   # Historical Instagram performance data
-
+│   ├── chatbot.py              # Core RAG logic & scoring algorithm
+│   └── build_vectorstore.py    # Data indexing & embedding pipeline
+│
+├── chroma_db/                  # Vector database storage (initially empty)
+│
+├── data/
+│   ├── Logo/                   # Store logos, icons, branding assets
+│   │   └── logo.png
+│   │
+│   └── dataset/                # All datasets go here
+│       └── mediapulse-dataset.csv
+│
+├── app.py                      # Streamlit UI & session state management
+├── .env                        # Configuration (API tokens & paths)
+├── requirements.txt            # Project dependencies
+```
 
 
 ## Setup & Installation
@@ -47,13 +56,14 @@ pip install -r requirements.txt
 ### 3. Configuration
 Create a `.env` file in the root directory with the following:
 
+```
 HF_TOKEN=your_huggingface_token_here
 CSV_PATH=data/mediapulse-dataset.csv
 CHROMA_DIR=chroma_db
 CHROMA_COLLECTION=mediapulse_dataset
 EMBEDDING_MODEL=BAAI/bge-small-en-v1.5
 RERANKER_MODEL=BAAI/bge-reranker-base
-
+```
 ### 4. Build Vector Store
 Run the script to index your CSV data into the ChromaDB vector database:
 
@@ -70,7 +80,7 @@ The system retrieves similar posts, reranks them for relevance, and then compare
 
 ---
 
-## 🏁 Running the App
+## Running the App
 Start the interactive dashboard using Streamlit:
 
 streamlit run app.py
