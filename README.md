@@ -25,12 +25,21 @@
 ```
 MediaPulse/
 ├── src/
-│   ├── chatbot.py           # Core RAG logic & scoring algorithm
-│   └── build_vectorstore.py  # Data indexing & embedding pipeline
-├── app.py                   # Streamlit UI & session state management
-├── .env                     # Configuration (API tokens & paths)
-├── requirements.txt         # Project dependencies
-└── mediapulse-dataset.csv   # Historical Instagram performance data
+│   ├── chatbot.py              # Core RAG logic & scoring algorithm
+│   └── build_vectorstore.py    # Data indexing & embedding pipeline
+│
+├── chroma_db/                  # Vector database storage (initially empty)
+│
+├── data/
+│   ├── Logo/                   # Store logos, icons, branding assets
+│   │   └── logo.png
+│   │
+│   └── dataset/                # All datasets go here
+│       └── mediapulse-dataset.csv
+│
+├── app.py                      # Streamlit UI & session state management
+├── .env                        # Configuration (API tokens & paths)
+├── requirements.txt            # Project dependencies
 ```
 
 
